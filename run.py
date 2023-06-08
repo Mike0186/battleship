@@ -1,3 +1,21 @@
+class Board:
+    """
+    Main board class. Sets the board size, number of ships, 
+    the players name and the board type (player or computer)
+    
+    """
+    def __init__(self, size, num_ships, name, board_type ):
+        self.size = size
+        self.num_ships = num_ships
+        self.name = name
+        self.type = board_type
+        self.board = [['.' for _ in range(size)] for _ in range(size)]
+        self.guesses = []
+        self.ships = []
+
+    def print(self):
+            for row in self.board:
+                print("".join(row))       
 
 def start_game():
     """
@@ -31,31 +49,11 @@ def start_game():
     
     print("-" * 50)
 
-start_game()    
+    board = Board(size, num_ships, player_name, type="player")
+    
+
+start_game()
 
 
-"""
-def user_grid_size():
-    while True:
-        try:
-            size = int(input("Enter the grid size:"))
-            if size <=0:
-                print("Please enter a positive number")
-            else:
-                return size
-        except ValueError:
-            print("Invalid input. Please enter a postive number")
 
-class board:
-    def __init__(self, size, num_ships, name, type):
-        self.size = size
-        self.num_ships = num_ships
-        self.name = name
-        self.type = type
-        self.guess = []
-        self.ships =[]
-print(board)
 
-grid_size = user_grid_size()            
-print(grid_size)
-"""

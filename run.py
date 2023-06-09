@@ -13,9 +13,15 @@ class Board:
         self.guesses = []
         self.ships = []
 
-    def print(self):
+    def print_board(self):
             for row in self.board:
-                print("".join(row))       
+                print("".join(row)) 
+
+    def populate_board(self):
+        for row in range(len(self.board)):
+            for column in range(len(self.board[row])):
+                self.board[row] [column] = "."
+        #self.print_board()
 
 def start_game():
     """
@@ -48,8 +54,13 @@ def start_game():
 
     
     print("-" * 50)
+    player_board = Board(size, num_ships, player_name, board_type='player')
+    player_board.populate_board()
+    print("-" * 50)
+    print((player_name.title()) + " " + "here is your battlefield\n")
+    print("-" * 50)
+    player_board.print_board()
 
-    board = Board(size, num_ships, player_name, type="player")
     
 
 start_game()

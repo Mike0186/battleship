@@ -1,3 +1,6 @@
+import random 
+from random import randint
+
 class Board:
     """
     Main board class. Sets the board size, number of ships, 
@@ -20,8 +23,20 @@ class Board:
     def populate_board(self):
         for row in range(len(self.board)):
             for column in range(len(self.board[row])):
-                self.board[row] [column] = "."
-        #self.print_board()
+                if(row, column) in self.ships:
+                    self.board[row][column] = "@"
+                else:
+                    self.board[row][column] = "."
+
+    # This code was cited in the code insitiute battleship game video
+    def add_ship(self, x, y, type ='computer'):
+        if len(self.ships) >= self.num_ships:
+            print("Error: you cannot add any more ships")
+        else:
+            self.ships.append((x, y))
+            if self.type == "player":
+                self.board[x] [y] = "@"            
+        
 
 def start_game():
     """
@@ -54,12 +69,22 @@ def start_game():
 
     
     print("-" * 50)
-    player_board = Board(size, num_ships, player_name, board_type='player')
+    player_board = Board(size, num_ships, 'player', board_type='player')
+    for _ in range(num_ships):
+        x, y = random.randint(0,player_board.size -1), random.randint(0,player_board.size -1)
+        player_board.add_ship(x, y, type = 'player')
     player_board.populate_board()
+    computer_board = Board(size, num_ships, 'computer', board_type='computer')
+    x, y = random.randint(0,player_board.size -1), random.randint(0,player_board.size -1)
+    computer_board.add_ship(x, y, type = 'computer')
+    computer_board.populate_board()
     print("-" * 50)
-    print((player_name.title()) + " " + "here is your battlefield\n")
+    print((player_name.title()) + " " + "here is your battlefield. Your Ships are marked with the @ symbol \n")
     print("-" * 50)
     player_board.print_board()
+    print("-" * 50)
+    print("Computer here is your battlefield\n")
+    computer_board.print_board()
 
     
 

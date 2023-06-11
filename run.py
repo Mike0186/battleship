@@ -46,12 +46,12 @@ class Board:
             if self.type == "player":
                 self.board[x][y] = "@"
 
-    def make_guess(self):
+    def make_guess(self,player_board):
         while True:
             x = input("Pick a row between 0" + " " + str(self.size) + "\n")
             y = input("Pick a column between 0" + " " + str(self.size) + "\n")
             if not x.isnumeric() or not y.isnumeric():
-                print("Enter a postive integer between 0" + " " + {self.size})
+                print("Enter a postive integer between 0" + " " + str(self.size))
                 continue
             x = int(x)
             y = int(y)
@@ -76,12 +76,12 @@ def start_game():
             print("Invalid Entry. Please choose a number between 2 and 10.")
             continue
         break
-    num_ships = min(size - 1, 10)
+    num_ships = size - 1
 
     print("-" * 120)
     player_name = input("Please Enter Your Name:\n")
     print("Welcome" + " " + (player_name.title()) + " " + "to ......\n")
-    print("********  **  **** **** **   ****** ***** **     ** ****** *****")
+    print("*******   **  **** **** **   ****** ***** **     ** ****** *****")
     print("**   ** **  ** **   **  **   **     **    **        **  ** **")
     print("**   ** **  ** **   **  **   **     **    **     ** **  ** **")
     print("******* ****** **   **  **   *****  ***** ****** ** ****** ******")
@@ -109,12 +109,15 @@ def start_game():
     print("-" * 50)
     print((player_name.title()) + " " + "here is your battlefield.\n")
     print("-" * 50)
-    player_board.print_board()
+    computer_board.print_board()
     print("-" * 50)
     print("Computer here is your battlefield\n")
-    computer_board.print_board()
+    print("-" * 50)
+    player_board.print_board()
+    print("-" * 50)
 
     player_board.make_guess()
+    computer_board.make_guess()
 
 
 start_game()

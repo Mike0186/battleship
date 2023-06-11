@@ -11,21 +11,23 @@ class Board:
         self.num_ships = num_ships
         self.name = name
         self.type = board_type
-        self.board = [['.' for _ in range(size)] for _ in range(size)]
+        self.board = [['. ' for _ in range(size)] for _ in range(size)]
         self.guess_list = []
         self.ships = []
 
-    def print_board(self):
+    def print_board(self, show_ships=False):
         for row in self.board:
+            if not show_ships:
+                row = ['. ' if cell != '@ ' else '. ' for cell in row]
             print("".join(row))
 
-    def populate_board(self):
+    def populate_board(self,):
         for row in range(len(self.board)):
             for column in range(len(self.board[row])):
                 if (row, column) in self.ships:
-                    self.board[row][column] = "@"
+                    self.board[row][column] = "@ "
                 else:
-                    self.board[row][column] = "."
+                    self.board[row][column] = ". "
     """ Line 32 to 48 was cited in the code insitiute battleship game video."""
 
     def guess(self, x, y):
@@ -43,10 +45,10 @@ class Board:
             print("Error: you cannot add any more ships")
         else:
             self.ships.append((x, y))
-            if self.type == "player":
+            if self.type == "player_board":
                 self.board[x][y] = "@"
 
-    def make_guess(self,player_board):
+    def make_guess(self):
         while True:
             x = input("Pick a row between 0" + " " + str(self.size) + "\n")
             y = input("Pick a column between 0" + " " + str(self.size) + "\n")
@@ -101,23 +103,25 @@ def start_game():
 
     computer_board = Board(size, num_ships, 'computer', board_type='computer')
     for _ in range(num_ships):
-        x = random.randint(0, player_board.size - 1)
-        y = random.randint(0, player_board.size - 1)
+        x = random.randint(0, computer_board.size - 1)
+        y = random.randint(0, computer_board.size - 1)
         computer_board.add_ship(x, y, type='computer')
     computer_board.populate_board()
 
     print("-" * 50)
     print((player_name.title()) + " " + "here is your battlefield.\n")
     print("-" * 50)
-    computer_board.print_board()
+    computer_board.print_board(show_ships=True)
     print("-" * 50)
     print("Computer here is your battlefield\n")
     print("-" * 50)
-    player_board.print_board()
+    player_board.print_board(show_ships=False)
     print("-" * 50)
 
     player_board.make_guess()
+    
     computer_board.make_guess()
+    
 
 
 start_game()
